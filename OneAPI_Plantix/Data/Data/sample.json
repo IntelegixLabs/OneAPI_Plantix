@@ -1,19 +1,6 @@
 {
     "data": [
         {
-            "userid": 111,
-            "image_url": "Data/Saved_Images/20201112011112.jpg",
-            "w_cord": 789.0,
-            "x_cord": 567.0,
-            "y_cord": 45.0,
-            "z_cord": 123.0,
-            "latitude": 12.33,
-            "longitude": 67.9,
-            "class_of_image": 0,
-            "auto": "Yes",
-            "uploaded": "Yes"
-        },
-        {
             "userid": 234,
             "image_url": "Data/Saved_Images/broken billboard_10.jpeg",
             "w_cord": 0.542692,
@@ -22,46 +9,7 @@
             "z_cord": 0.513655,
             "latitude": 12.44,
             "longitude": 44.9,
-            "class_of_image": 6,
-            "auto": "Yes",
-            "uploaded": "No"
-        },
-        {
-            "userid": 234,
-            "image_url": "Data/Saved_Images/smart.png",
-            "w_cord": 0.153956,
-            "x_cord": 0.248,
-            "y_cord": 0.254222,
-            "z_cord": 0.2128,
-            "latitude": 12.44,
-            "longitude": 44.9,
-            "class_of_image": 6,
-            "auto": "Yes",
-            "uploaded": "No"
-        },
-        {
-            "userid": 234,
-            "image_url": "Data/Saved_Images/GRAFFITI_5.jpeg",
-            "w_cord": 0.459961,
-            "x_cord": 0.572754,
-            "y_cord": 0.91862,
-            "z_cord": 0.458008,
-            "latitude": 12.44,
-            "longitude": 44.9,
-            "class_of_image": 6,
-            "auto": "Yes",
-            "uploaded": "No"
-        },
-        {
-            "userid": 234,
-            "image_url": "Data/Saved_Images/img-197.jpg",
-            "w_cord": 0.507639,
-            "x_cord": 0.593056,
-            "y_cord": 0.470833,
-            "z_cord": 0.286111,
-            "latitude": 12.44,
-            "longitude": 100,
-            "class_of_image": 6,
+            "class_of_image": 0,
             "auto": "Yes",
             "uploaded": "No"
         }

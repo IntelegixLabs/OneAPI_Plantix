@@ -384,12 +384,10 @@ def main():
                     self.selection_obj.update(start, end)
                     focus_area = self.selection_obj._get_coords(start, end)
 
-                    print(focus_area)
 
                     x1, y1, x2, y2 = pbx.convert_bbox(focus_area, from_type="voc", to_type="yolo",
                                                       image_size=(665, 600))
 
-                    print(x1, y1, x2, y2)
 
                     if x1 != 0.5 and y1 != 0.5 and x2 != 1.0 and y2 != 1.0:
 
@@ -564,7 +562,6 @@ def main():
                                 "uploaded": "No"
                             }
 
-                        print(json_data)
 
                         with open('Data/Data/sample.json', 'r+') as openfile:
                             # Reading from json file
@@ -573,12 +570,10 @@ def main():
                             openfile.seek(0)
                             json.dump(json_object,openfile, indent = 4)
 
-                        print(json_data)
 
                         messagebox.showinfo("Successfully", "The data saved into Json Data successfully")
                         load_tree()
                     except Exception:
-                        print(Exception)
                         messagebox.showerror("Operation failed", "The data cannot be saved. Entered data invalid")
 
                 def load_tree():
@@ -616,7 +611,6 @@ def main():
                     self.scroll1.pack(side='right', fill='y')
 
                     for i in range(len(self.temp_values)-1, -1, -1):
-                        print(self.temp_values[i][8])
                         if self.temp_values[i][8] == 0:
                             self.tree.insert('', 'end', values=(str(i),
                                                                 str(self.temp_values[i][0]),

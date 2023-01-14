@@ -60,7 +60,7 @@
 
 <br />
 <p align="center">
-  <img src="Insights/1.png" width="400"/>
-  <img src="Insights/2.png" width="400"/>
+  <img src="Insights/1.png" />
+  <img src="Insights/2.png" />
 </p>
 <br />

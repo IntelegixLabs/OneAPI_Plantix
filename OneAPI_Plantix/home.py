@@ -252,7 +252,7 @@ def main():
                 self.b2 = ttk.Button(win, text='Uploaded Data Viewer', width=20, command=self.data_viewer)
                 self.b2.place(x=300, y=780, width=300, height=100)
 
-                self.b3 = ttk.Button(win, text='Live Dash Cam', width=20, command=self.dash_cam)
+                self.b3 = ttk.Button(win, text='User Settings', width=20, command=self.dash_cam)
                 self.b3.place(x=1400, y=220, width=300, height=100)
 
                 self.b4 = ttk.Button(win, text='Label Picture', width=20, command=self.label_picture)
@@ -321,7 +321,7 @@ def main():
 
                 TOKENS(tokens_user_login)
                 tokens_user_login.iconbitmap(default='DATA/Images/icons/favicon.ico')
-                tokens_user_login.title('OneAPI_Plantix  Car Dashboard Settings ' + version)
+                tokens_user_login.title('OneAPI Plantix User Settings ' + version)
                 tokens_user_login.geometry("850x350")
                 tokens_user_login.mainloop()
 
@@ -360,7 +360,7 @@ def main():
 
         Store_DATA_IN_INI(window_user_login1)
         window_user_login1.iconbitmap(default='DATA/Images/icons/favicon.ico')
-        window_user_login1.title('OneAPI_Plantix')
+        window_user_login1.title('OneAPI Plantix')
         window_user_login1.mainloop()
 
     def data_viewer():
@@ -615,8 +615,9 @@ def main():
                     self.scroll1 = ttk.Scrollbar(self.frame, orient="vertical", command=self.tree.yview)
                     self.scroll1.pack(side='right', fill='y')
 
-                    for i in range(len(self.temp_values)-1,-1, -1):
-                        if str(self.temp_values[i][10]) == "Yes":
+                    for i in range(len(self.temp_values)-1, -1, -1):
+                        print(self.temp_values[i][8])
+                        if self.temp_values[i][8] == 0:
                             self.tree.insert('', 'end', values=(str(i),
                                                                 str(self.temp_values[i][0]),
                                                                 str(self.temp_values[i][1]),
@@ -800,7 +801,7 @@ def main():
 
         View_Image(window_user_login3)
         window_user_login3.iconbitmap(default='DATA/Images/icons/favicon.ico')
-        window_user_login3.title('OneAPI_Plantix')
+        window_user_login3.title('OneAPI Plantix')
         window_user_login3.mainloop()
 
     display()

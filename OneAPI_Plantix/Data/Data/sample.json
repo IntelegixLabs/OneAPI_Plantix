@@ -1,15 +1,54 @@
 {
     "data": [
         {
-            "userid": 234,
-            "image_url": "Data/Saved_Images/broken billboard_10.jpeg",
-            "w_cord": 0.542692,
-            "x_cord": 0.439601,
-            "y_cord": 0.774615,
-            "z_cord": 0.513655,
+            "userid": "raj713335",
+            "image_url": "Data/Saved_Images/agri_0_3.jpeg",
+            "w_cord": 0.478516,
+            "x_cord": 0.560547,
+            "y_cord": 0.847656,
+            "z_cord": 0.625000,
             "latitude": 12.44,
             "longitude": 44.9,
             "class_of_image": 0,
+            "auto": "Yes",
+            "uploaded": "No"
+        },
+        {
+            "userid": "raj713335",
+            "image_url": "Data/Saved_Images/agri_0_6.jpeg",
+            "w_cord": 0.508789,
+            "x_cord": 0.489258,
+            "y_cord": 0.869141,
+            "z_cord": 0.861328,
+            "latitude": 12.44,
+            "longitude": 44.9,
+            "class_of_image": 1,
+            "auto": "Yes",
+            "uploaded": "No"
+        },
+        {
+            "userid": "raj713335",
+            "image_url": "Data/Saved_Images/agri_0_81.jpeg",
+            "w_cord": 0.440430,
+            "x_cord": 0.454102,
+            "y_cord": 0.779297,
+            "z_cord": 0.361328,
+            "latitude": 12.44,
+            "longitude": 44.9,
+            "class_of_image": 0,
+            "auto": "Yes",
+            "uploaded": "No"
+        },
+        {
+            "userid": "raj713335",
+            "image_url": "Data/Saved_Images/agri_0_270.jpeg",
+            "w_cord": 0.450195,
+            "x_cord": 0.585938,
+            "y_cord": 0.685547,
+            "z_cord": 0.687500,
+            "latitude": 12.44,
+            "longitude": 44.9,
+            "class_of_image": 1,
             "auto": "Yes",
             "uploaded": "No"
         }

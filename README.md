@@ -54,3 +54,13 @@
   <img src="Insights/test_batch2_pred.jpg" width="200"/>
 </p>
 <br />
+
+
+### 3. Application Screenshots
+
+<br />
+<p align="center">
+  <img src="Insights/1.png" width="400"/>
+  <img src="Insights/2.png" width="400"/>
+</p>
+<br />

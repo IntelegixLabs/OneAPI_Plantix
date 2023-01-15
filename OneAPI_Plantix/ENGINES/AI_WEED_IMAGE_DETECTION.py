@@ -17,7 +17,7 @@ from utils.general import check_img_size, check_requirements, check_imshow, non_
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 
-def AI_WEED_DETECTION(source="0"):
+def AI_WEED_IMAGE_DETECTION(source="0"):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     weights = "best.pt"
     img_size = 640
@@ -60,14 +60,7 @@ def AI_WEED_DETECTION(source="0"):
     old_img_b = 1
 
     pot_holes = 0
-    ii = 0
     for path, img, im0s, vid_cap in dataset:
-        if ii % 10 != 0:
-            ii += 1
-            continue
-        else:
-            ii += 1
-
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
@@ -117,8 +110,11 @@ def AI_WEED_DETECTION(source="0"):
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     label = f'{names[int(cls)]} {conf:.2f}'
-                    print(xyxy)
+                    print(xyxy, label)
                     pot_holes += 1
+                    plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
+
+                    label = f'{names[int(cls)]} {conf:.2f}'
                     plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
 
             # Print time (inference + NMS)
@@ -130,17 +126,17 @@ def AI_WEED_DETECTION(source="0"):
             cv2.putText(im0, "OneAPI Plantix (Weed Detection System)", (110, 40),
                         font, 0.7 * 1, (255, 255, 255), 2)
             cv2.rectangle(im0, (20, 50), (W - 20, 15), (255, 255, 255), 2)
-            # cv2.putText(img, "RISK ANALYSIS", (30, 85),
-            #             font, 0.5, (255, 255, 0), 1)
-            # cv2.putText(img, "-- GREEN : SAFE", (H-100, 85),
-            #             font, 0.5, (0, 255, 0), 1)
-            # cv2.putText(img, "-- RED: UNSAFE", (H-200, 85),
-            #             font, 0.5, (0, 0, 255), 1)
+            cv2.putText(im0, "Legend", (30, 85),
+                        font, 0.5, (255, 255, 0), 1)
+            cv2.putText(im0, "-- GREEN : Crop", (H-100, 85),
+                        font, 0.5, (0, 255, 0), 1)
+            cv2.putText(im0, "-- RED: Weed", (H-200, 85),
+                        font, 0.5, (0, 0, 255), 1)
 
-            tot_str = "Total Weed Detected : " + str(pot_holes)
-            high_str = "Cigarette Detected : " + str(0)
-            low_str = "Cell Phone Detected : " + str(0)
-            safe_str = "Total Persons: " + str(0)
+            tot_str = "Total Weed Detected : " + str(0)
+            high_str = "Total Crop Detected : " + str(1)
+            low_str = "Current Frame Weed Detected: " + str(0)
+            safe_str = "Current Frame Crop Detected: " + str(0)
 
             Cigarette = "False"
             Mobile = "False"
@@ -170,10 +166,12 @@ def AI_WEED_DETECTION(source="0"):
             cv2.namedWindow("Output", cv2.WINDOW_NORMAL)
             cv2.setWindowProperty("Output", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
             cv2.imshow("Output", im0)
+            cv2.waitKey(100)
 
-            if (cv2.waitKey(1) & 0xFF == ord('q')):
-                break
+            cv2.imwrite("save.png", im0)
+            # if (cv2.waitKey(1) & 0xFF == ord('q')):
+            #     break
 
 if __name__ == '__main__':
     with torch.no_grad():
-        AI_WEED_DETECTION(0)
+        AI_WEED_IMAGE_DETECTION("agri_0_3.jpeg")

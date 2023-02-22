@@ -1,25 +1,26 @@
-from pathlib import Path
-import os
-from scipy.spatial import distance
-import numpy as np
-import time
-import cv2
-from datetime import datetime
 import torch
-import torch.backends.cudnn as cudnn
-from numpy import random
+
+def AI_WEED_IMAGE_DETECTION(source="0", model_weights="../Model/potholes_detector.pt"):
+
+    from pathlib import Path
+    import numpy as np
 
 
-from models.experimental import attempt_load
-from utils.datasets import LoadStreams, LoadImages
-from utils.general import check_img_size, check_requirements, check_imshow, non_max_suppression, apply_classifier, \
-    scale_coords, xyxy2xywh, strip_optimizer, set_logging, increment_path
-from utils.plots import plot_one_box
-from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
+    import cv2
+    from datetime import datetime
+    import torch
+    import torch.backends.cudnn as cudnn
 
-def AI_WEED_IMAGE_DETECTION(source="0"):
+
+    from models.experimental import attempt_load
+    from utils.datasets import LoadStreams, LoadImages
+    from utils.general import check_img_size, check_requirements, check_imshow, non_max_suppression, apply_classifier, \
+        scale_coords, xyxy2xywh, strip_optimizer, set_logging, increment_path
+    from utils.plots import plot_one_box
+    from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    weights = "best.pt"
+    weights = model_weights
     img_size = 640
     iou_thres = 0.45
     conf_thres = 0.5
@@ -51,7 +52,8 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
 
     # Get names and colors
     names = model.module.names if hasattr(model, 'module') else model.names
-    colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
+    # colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
+    colors = [(0, 255, 0), (0, 255, 255), (0, 0, 255)]
 
     # Run inference
     if device.type != 'cpu':
@@ -60,7 +62,11 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
     old_img_b = 1
 
     pot_holes = 0
+    high = 0
+    medium = 0
+    low = 0
     for path, img, im0s, vid_cap in dataset:
+
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
@@ -85,6 +91,7 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
         t3 = time_synchronized()
 
         # Process detections
+        current_frame_potholes = 0
         for i, det in enumerate(pred):  # detections per image
 
             if webcam:  # batch_size >= 1
@@ -94,9 +101,6 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
 
             im0 = cv2.resize(im0, (640, 480))
 
-            p = Path(p)  # to Path
-            # save_path = str(save_dir / p.name)  # img.jpg
-            # txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             if len(det):
                 # Rescale boxes from img_size to im0 size
@@ -110,36 +114,47 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     label = f'{names[int(cls)]} {conf:.2f}'
-                    print(xyxy, label)
+                    print(xyxy)
                     pot_holes += 1
-                    plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
+                    current_frame_potholes += 1
+                    mul = (int(xyxy[2])*int(xyxy[3]))
+                    print("sumx", mul)
+                    if mul <= 40000:
+                        plot_one_box(xyxy, im0, label=label, color=colors[0], line_thickness=1)
+                        low += 1
+                    elif mul > 40000 and mul < 70000:
+                        plot_one_box(xyxy, im0, label=label, color=colors[1], line_thickness=1)
+                        medium += 1
+                    else:
+                        plot_one_box(xyxy, im0, label=label, color=colors[2], line_thickness=1)
+                        high += 1
 
-                    label = f'{names[int(cls)]} {conf:.2f}'
-                    plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
 
-            # Print time (inference + NMS)
+
+
 
             (H, W) = im0.shape[:2]
 
             print(H, W)
 
-            cv2.putText(im0, "OneAPI Plantix (Weed Detection System)", (110, 40),
+            cv2.putText(im0, "Neom (PotHoles Detection System)", (110, 40),
                         font, 0.7 * 1, (255, 255, 255), 2)
             cv2.rectangle(im0, (20, 50), (W - 20, 15), (255, 255, 255), 2)
-            cv2.putText(im0, "Legend", (30, 85),
-                        font, 0.5, (255, 255, 0), 1)
-            cv2.putText(im0, "-- GREEN : Crop", (H-100, 85),
-                        font, 0.5, (0, 255, 0), 1)
-            cv2.putText(im0, "-- RED: Weed", (H-200, 85),
-                        font, 0.5, (0, 0, 255), 1)
 
-            tot_str = "Total Weed Detected : " + str(0)
-            high_str = "Total Crop Detected : " + str(1)
-            low_str = "Current Frame Weed Detected: " + str(0)
-            safe_str = "Current Frame Crop Detected: " + str(0)
+            cv2.putText(im0, "RISK ANALYSIS", (30, 85),
+                        font, 0.4 * 1, (255, 255, 255), 1)
+            cv2.putText(im0, "-- GREEN : SAFE", (H-20, 85),
+                        font, 0.4 * 1, (0, 255, 0), 1)
+            cv2.putText(im0, "-- YELLOW : Drive Slowly ", (H - 200, 85),
+                        font, 0.4 * 1, (0, 255, 255), 1)
+            cv2.putText(im0, "-- RED: UNSAFE", (H-320, 85),
+                        font, 0.4 * 1, (0, 0, 255), 1)
 
-            Cigarette = "False"
-            Mobile = "False"
+            tot_str = "Total Potholes Detected: " + str(pot_holes)
+            high_str = "Risky Potholes Detected: " + str(high)
+            med_str = "Unsafe Pothole Detected: " + str(medium)
+            safe_str = "Safe Pothole Detected: " + str(low)
+
 
             sub_img = im0[H - 100: H, 0:260]
             black_rect = np.ones(sub_img.shape, dtype=np.uint8) * 0
@@ -148,14 +163,18 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
 
             im0[H - 100:H + 40, 0:260] = res
 
+
             cv2.putText(im0, tot_str, (10, H - 80),
                         font, 0.5 * 1, (255, 255, 255), 1)
             cv2.putText(im0, high_str, (10, H - 55),
                         font, 0.5 * 1, (0, 255, 0), 1)
-            cv2.putText(im0, low_str, (10, H - 30),
+            cv2.putText(im0, med_str, (10, H - 30),
                         font, 0.5 * 1, (0, 120, 255), 1)
             cv2.putText(im0, safe_str, (10, H - 5),
                         font, 0.5 * 1, (0, 0, 150), 1)
+
+            cv2.putText(im0, str("CURRENT FRAME: " + str(current_frame_potholes)), (W - 225, H - 35),
+                        font, 0.7 * 1, (0, 0, 255), 2)
 
             now = datetime.now()
 
@@ -166,12 +185,12 @@ def AI_WEED_IMAGE_DETECTION(source="0"):
             cv2.namedWindow("Output", cv2.WINDOW_NORMAL)
             cv2.setWindowProperty("Output", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
             cv2.imshow("Output", im0)
-            cv2.waitKey(100)
 
-            cv2.imwrite("save.png", im0)
-            # if (cv2.waitKey(1) & 0xFF == ord('q')):
-            #     break
+            if (cv2.waitKey(1) & 0xFF == ord('q')):
+                break
 
-if __name__ == '__main__':
-    with torch.no_grad():
-        AI_WEED_IMAGE_DETECTION("agri_0_3.jpeg")
+    cv2.destroyAllWindows()
+
+# if __name__ == '__main__':
+#     with torch.no_grad():
+#         AI_WEED_IMAGE_DETECTION("../TEST_VIDEO/potholes.mp4")

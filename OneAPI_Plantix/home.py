@@ -9,6 +9,13 @@ import json
 import pybboxes as pbx
 import geocoder
 from datetime import datetime
+from pathlib import Path
+import os
+from scipy.spatial import distance
+import numpy as np
+import time
+import cv2
+from datetime import datetime
 import os
 
 
@@ -246,16 +253,16 @@ def main():
                                      width=100, command=self.settings)
                 self.b0b.place(x=1770, y=950, width=150, height=150)
 
-                self.b1 = ttk.Button(win, text='Weed Detection', width=20, command=self.weed)
+                self.b1 = ttk.Button(win, text='Pot Holes Detection', width=20, command=self.pot_holes)
                 self.b1.place(x=90, y=470, width=300, height=100)
 
                 self.b2 = ttk.Button(win, text='Uploaded Data Viewer', width=20, command=self.data_viewer)
                 self.b2.place(x=300, y=780, width=300, height=100)
 
-                self.b3 = ttk.Button(win, text='User Settings', width=20, command=self.dash_cam)
+                self.b3 = ttk.Button(win, text='Live Dash Cam', width=20, command=self.dash_cam)
                 self.b3.place(x=1400, y=220, width=300, height=100)
 
-                self.b4 = ttk.Button(win, text='Label Picture', width=20, command=self.label_picture)
+                self.b4 = ttk.Button(win, text='Detect Picture', width=20, command=self.label_picture)
                 self.b4.place(x=1480, y=530, width=300, height=100)
 
                 regx.destroy()
@@ -321,7 +328,7 @@ def main():
 
                 TOKENS(tokens_user_login)
                 tokens_user_login.iconbitmap(default='DATA/Images/icons/favicon.ico')
-                tokens_user_login.title('OneAPI Plantix User Settings ' + version)
+                tokens_user_login.title('OneAPI Plantix Dashboard Settings ' + version)
                 tokens_user_login.geometry("850x350")
                 tokens_user_login.mainloop()
 
@@ -330,23 +337,42 @@ def main():
                 window_user_login1.destroy()
                 exit(0)
 
-            @staticmethod
-            def weed(self):
-                window_user_login1.destroy()
+
+            def pot_holes(self):
+                import torch
+                with torch.no_grad():
+                    from ENGINES import AI_WEED_DETECTION
+                    AI_WEED_DETECTION.AI_WEED_DETECTION(source=0, model_weights="Model/crop.pt")
+                    #window_user_login1.destroy()
                 # second(user_key=user_key, job="HOSTEL ENVIRONMENT")
 
             def data_viewer(self):
                 window_user_login1.destroy()
                 data_viewer()
 
-            @staticmethod
             def dash_cam(self):
-                window_user_login1.destroy()
+                pass
+                # import torch
+                # with torch.no_grad():
+                #     from ENGINES import AI_DASH_CAM
+                #     AI_DASH_CAM.AI_DASH_CAM(source="TEST_VIDEO/Visual_Pollution.mp4",
+                #                                                 model_weights="Model/visual_pollution.pt")
+                #window_user_login1.destroy()
                 # second(user_key=user_key, job="BUS ENVIRONMENT")
 
-            @staticmethod
             def label_picture(self):
-                window_user_login1.destroy()
+                filename = filedialog.askopenfilename(initialdir="/",
+                                                      title="Select a image File",
+                                                      filetypes=(("Image files",
+                                                                  "*.jpg"),
+                                                                 ("Image files",
+                                                                  "*.jpeg*"),
+                                                                 ("Image files",
+                                                                  "*.png*")
+                                                                 ))
+                import torch
+                from ENGINES import AI_WEED_IMAGE_DETECTION
+                AI_WEED_IMAGE_DETECTION.AI_WEED_IMAGE_DETECTION(filename, model_weights="Model/crop.pt")
                 # second(user_key=user_key, job="EXAM ENVIRONMENT")
 
             @staticmethod
@@ -374,9 +400,9 @@ def main():
             def __init__(self, win, *args, **kwargs):
                 super().__init__(win, *args, **kwargs)
 
-                self.label_class = {0: 'CROP', 1: 'WEED'}
+                self.label_class = {0: 'Crop', 1: 'Weed'}
 
-                self.image_class = {'CROP': 0, 'WEED': 1}
+                self.image_class = {'Crop': 0, 'Weed': 1}
 
                 selected_values = ["", "", "", "", "", "", "", "", "", "", ""]
 
@@ -384,10 +410,12 @@ def main():
                     self.selection_obj.update(start, end)
                     focus_area = self.selection_obj._get_coords(start, end)
 
+                    print(focus_area)
 
                     x1, y1, x2, y2 = pbx.convert_bbox(focus_area, from_type="voc", to_type="yolo",
                                                       image_size=(665, 600))
 
+                    print(x1, y1, x2, y2)
 
                     if x1 != 0.5 and y1 != 0.5 and x2 != 1.0 and y2 != 1.0:
 
@@ -562,6 +590,7 @@ def main():
                                 "uploaded": "No"
                             }
 
+                        print(json_data)
 
                         with open('Data/Data/sample.json', 'r+') as openfile:
                             # Reading from json file
@@ -570,10 +599,12 @@ def main():
                             openfile.seek(0)
                             json.dump(json_object,openfile, indent = 4)
 
+                        print(json_data)
 
                         messagebox.showinfo("Successfully", "The data saved into Json Data successfully")
                         load_tree()
                     except Exception:
+                        print(Exception)
                         messagebox.showerror("Operation failed", "The data cannot be saved. Entered data invalid")
 
                 def load_tree():
@@ -610,8 +641,8 @@ def main():
                     self.scroll1 = ttk.Scrollbar(self.frame, orient="vertical", command=self.tree.yview)
                     self.scroll1.pack(side='right', fill='y')
 
-                    for i in range(len(self.temp_values)-1, -1, -1):
-                        if self.temp_values[i][8] == 0:
+                    for i in range(len(self.temp_values)-1,-1, -1):
+                        if str(self.temp_values[i][10]) == "Yes":
                             self.tree.insert('', 'end', values=(str(i),
                                                                 str(self.temp_values[i][0]),
                                                                 str(self.temp_values[i][1]),
@@ -695,7 +726,7 @@ def main():
                 self.lb2.place(x=650, y=350)
 
                 self.txtfld2 = ttk.Combobox(win, font=("Helvetica", 20),
-                                            values=['CROP', 'WEED'])
+                                            values=['Crop', 'Weed'])
                 self.txtfld2.place(x=890, y=350)
                 self.txtfld2.set(selected_values[9])
 
@@ -795,7 +826,7 @@ def main():
 
         View_Image(window_user_login3)
         window_user_login3.iconbitmap(default='DATA/Images/icons/favicon.ico')
-        window_user_login3.title('OneAPI Plantix')
+        window_user_login3.title('OneAPI_Plantix')
         window_user_login3.mainloop()
 
     display()

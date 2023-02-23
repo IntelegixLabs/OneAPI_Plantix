@@ -342,7 +342,7 @@ def main():
                 import torch
                 with torch.no_grad():
                     from ENGINES import AI_WEED_DETECTION
-                    AI_WEED_DETECTION.AI_WEED_DETECTION(source=0, model_weights="Model/crop.pt")
+                    AI_WEED_DETECTION.AI_WEED_DETECTION(source="0", model_weights="Model/crop.pt")
                     #window_user_login1.destroy()
                 # second(user_key=user_key, job="HOSTEL ENVIRONMENT")
 

@@ -67,7 +67,7 @@ labelImg
 ### Add more data from the already labelled images
 
 ```
-git clone https://github.com/IntelegixLabs/OneAPI_Plantix/dataset
+git clone https://github.com/IntelegixLabs/OneAPI_Plantix
 cd OneAPI_Plantix/dataset
 Add train,val, and test data to Neom/yolov7-custom/data files 
 ```

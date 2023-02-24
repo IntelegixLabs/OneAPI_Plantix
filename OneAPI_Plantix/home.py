@@ -641,7 +641,8 @@ def main():
                     self.scroll1.pack(side='right', fill='y')
 
                     for i in range(len(self.temp_values)-1,-1, -1):
-                        if str(self.temp_values[i][10]) == "Yes":
+                        print(self.label_class[self.temp_values[i][8]], "Jai")
+                        if str(self.label_class[self.temp_values[i][8]]) == "Weed":
                             self.tree.insert('', 'end', values=(str(i),
                                                                 str(self.temp_values[i][0]),
                                                                 str(self.temp_values[i][1]),
@@ -670,8 +671,8 @@ def main():
                                                                 str(self.temp_values[i][10])),
                                              tags=('even',))
 
-                    self.tree.tag_configure('odd', background='#CCFF99')
-                    self.tree.tag_configure('even', background='#FFFF99')
+                    self.tree.tag_configure('even', background='#CCFF99')
+                    self.tree.tag_configure('odd', background='#FFFF99')
 
 
 

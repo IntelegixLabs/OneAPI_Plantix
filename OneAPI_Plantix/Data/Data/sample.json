@@ -6,7 +6,7 @@
             "w_cord": 0.478516,
             "x_cord": 0.560547,
             "y_cord": 0.847656,
-            "z_cord": 0.625000,
+            "z_cord": 0.625,
             "latitude": 12.44,
             "longitude": 44.9,
             "class_of_image": 0,
@@ -29,7 +29,7 @@
         {
             "userid": "raj713335",
             "image_url": "Data/Saved_Images/agri_0_81.jpeg",
-            "w_cord": 0.440430,
+            "w_cord": 0.44043,
             "x_cord": 0.454102,
             "y_cord": 0.779297,
             "z_cord": 0.361328,
@@ -45,11 +45,37 @@
             "w_cord": 0.450195,
             "x_cord": 0.585938,
             "y_cord": 0.685547,
-            "z_cord": 0.687500,
+            "z_cord": 0.6875,
             "latitude": 12.44,
             "longitude": 44.9,
             "class_of_image": 1,
             "auto": "Yes",
+            "uploaded": "No"
+        },
+        {
+            "userid": "raj713335",
+            "image_url": "Data/Saved_Images/20230225002658.jpg",
+            "w_cord": 0.543609022556391,
+            "x_cord": 0.7416666666666667,
+            "y_cord": 0.35037593984962406,
+            "z_cord": 0.45,
+            "latitude": 20.9299,
+            "longitude": 86.1411,
+            "class_of_image": 1,
+            "auto": "No",
+            "uploaded": "No"
+        },
+        {
+            "userid": "raj713335",
+            "image_url": "Data/Saved_Images/20230225002735.jpg",
+            "w_cord": 0.5390977443609023,
+            "x_cord": 0.7241666666666666,
+            "y_cord": 0.3172932330827068,
+            "z_cord": 0.4816666666666667,
+            "latitude": 20.9299,
+            "longitude": 86.1411,
+            "class_of_image": 0,
+            "auto": "No",
             "uploaded": "No"
         }
     ]

@@ -1,6 +1,6 @@
 import torch
 
-def AI_WEED_IMAGE_DETECTION(source="0", model_weights="../Model/potholes_detector.pt"):
+def AI_WEED_IMAGE_DETECTION(source="0", model_weights="../Model/crop.pt"):
 
     from pathlib import Path
     import numpy as np
@@ -141,37 +141,27 @@ def AI_WEED_IMAGE_DETECTION(source="0", model_weights="../Model/potholes_detecto
                         font, 0.7 * 1, (255, 255, 255), 2)
             cv2.rectangle(im0, (20, 50), (W - 20, 15), (255, 255, 255), 2)
 
-            cv2.putText(im0, "RISK ANALYSIS", (30, 85),
+            cv2.putText(im0, "TYPE", (30, 85),
                         font, 0.4 * 1, (255, 255, 255), 1)
-            cv2.putText(im0, "-- GREEN : SAFE", (H-20, 85),
-                        font, 0.4 * 1, (0, 255, 0), 1)
-            cv2.putText(im0, "-- YELLOW : Drive Slowly ", (H - 200, 85),
+            cv2.putText(im0, "-- YELLOW : WEED ", (H - 250, 85),
                         font, 0.4 * 1, (0, 255, 255), 1)
-            cv2.putText(im0, "-- RED: UNSAFE", (H-320, 85),
-                        font, 0.4 * 1, (0, 0, 255), 1)
+            cv2.putText(im0, "-- GREEN : CROP", (H - 20, 85),
+                        font, 0.4 * 1, (0, 255, 0), 1)
 
-            tot_str = "Total Potholes Detected: " + str(pot_holes)
-            high_str = "Risky Potholes Detected: " + str(high)
-            med_str = "Unsafe Pothole Detected: " + str(medium)
-            safe_str = "Safe Pothole Detected: " + str(low)
+            weed_str = "Total Weed Detected: " + str(pot_holes)
+            crop_str = "Total Crop Detected: " + str(low)
 
-
-            sub_img = im0[H - 100: H, 0:260]
+            sub_img = im0[H - 50: H, 0:240]
             black_rect = np.ones(sub_img.shape, dtype=np.uint8) * 0
 
             res = cv2.addWeighted(sub_img, 0.8, black_rect, 0.2, 1.0)
 
-            im0[H - 100:H + 40, 0:260] = res
+            im0[H - 50:H + 40, 0:240] = res
 
-
-            cv2.putText(im0, tot_str, (10, H - 80),
-                        font, 0.5 * 1, (255, 255, 255), 1)
-            cv2.putText(im0, high_str, (10, H - 55),
+            cv2.putText(im0, weed_str, (10, H - 30),
+                        font, 0.5 * 1, (0, 255, 255), 1)
+            cv2.putText(im0, crop_str, (10, H - 5),
                         font, 0.5 * 1, (0, 255, 0), 1)
-            cv2.putText(im0, med_str, (10, H - 30),
-                        font, 0.5 * 1, (0, 120, 255), 1)
-            cv2.putText(im0, safe_str, (10, H - 5),
-                        font, 0.5 * 1, (0, 0, 150), 1)
 
             cv2.putText(im0, str("CURRENT FRAME: " + str(current_frame_potholes)), (W - 225, H - 35),
                         font, 0.7 * 1, (0, 0, 255), 2)
@@ -189,7 +179,7 @@ def AI_WEED_IMAGE_DETECTION(source="0", model_weights="../Model/potholes_detecto
             if (cv2.waitKey(1) & 0xFF == ord('q')):
                 break
 
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
 # if __name__ == '__main__':
 #     with torch.no_grad():

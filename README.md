@@ -94,10 +94,10 @@ $ cd OneAPI_Plantix
 $ cd OneAPI_Plantix
 ```
 - Download the Trained Models and Test_Video Folder from google Drive link given below and extract it inside OneAPI_Plantix Folder
-- https://drive.google.com/file/d/1YXf8kMjowu28J5Z_ZPXoRIDABRKzmHis/view?usp=sharing
+- https://drive.google.com/uc?id=1qmlMFar5DF72TgUlrfmc1z9qVBbBq-Gi&export=download
 
 ```sh
-$ wget https://drive.google.com/file/d/1YXf8kMjowu28J5Z_ZPXoRIDABRKzmHis/view?usp=sharing
+$ wget https://drive.google.com/uc?id=1qmlMFar5DF72TgUlrfmc1z9qVBbBq-Gi&export=download
 ```
 
 - Install Python 3.10 and its required Packages like PyTorch etc.

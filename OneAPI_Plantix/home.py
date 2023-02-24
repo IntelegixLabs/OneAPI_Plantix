@@ -253,17 +253,17 @@ def main():
                                      width=100, command=self.settings)
                 self.b0b.place(x=1770, y=950, width=150, height=150)
 
-                self.b1 = ttk.Button(win, text='Pot Holes Detection', width=20, command=self.pot_holes)
+                self.b1 = ttk.Button(win, text='Crop Detection', width=20, command=self.crop_detection)
                 self.b1.place(x=90, y=470, width=300, height=100)
 
                 self.b2 = ttk.Button(win, text='Uploaded Data Viewer', width=20, command=self.data_viewer)
                 self.b2.place(x=300, y=780, width=300, height=100)
 
-                self.b3 = ttk.Button(win, text='Live Dash Cam', width=20, command=self.dash_cam)
-                self.b3.place(x=1400, y=220, width=300, height=100)
+                # self.b3 = ttk.Button(win, text='Live Dash Cam', width=20, command=self.dash_cam)
+                # self.b3.place(x=1400, y=220, width=300, height=100)
 
                 self.b4 = ttk.Button(win, text='Detect Picture', width=20, command=self.label_picture)
-                self.b4.place(x=1480, y=530, width=300, height=100)
+                self.b4.place(x=1470, y=540, width=300, height=100)
 
                 regx.destroy()
 
@@ -338,7 +338,7 @@ def main():
                 exit(0)
 
 
-            def pot_holes(self):
+            def crop_detection(self):
                 import torch
                 with torch.no_grad():
                     from ENGINES import AI_WEED_DETECTION

@@ -137,7 +137,7 @@ def AI_WEED_IMAGE_DETECTION(source="0", model_weights="../Model/potholes_detecto
 
             print(H, W)
 
-            cv2.putText(im0, "Neom (PotHoles Detection System)", (110, 40),
+            cv2.putText(im0, "One API Plantix", (220, 40),
                         font, 0.7 * 1, (255, 255, 255), 2)
             cv2.rectangle(im0, (20, 50), (W - 20, 15), (255, 255, 255), 2)
 

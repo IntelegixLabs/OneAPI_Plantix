@@ -159,6 +159,14 @@ def AI_WEED_DETECTION(source="0", model_weights="../Model/potholes_detector.pt")
 
             im0[H - 50:H + 40, 0:240] = res
 
+            cv2.putText(im0, str("WEED: " + str(0)), (30, H - 90),
+                        font, 0.4 * 1, (0, 255, 255), 1)
+            cv2.rectangle(im0, (10, H - 90), (20, H - 95), (0, 255, 255), 7)
+
+            cv2.putText(im0, str("CROP:  " + str(0)), (30, H - 65),
+                        font, 0.4 * 1, (0, 255, 0), 1)
+            cv2.rectangle(im0, (10, H - 65), (20, H - 70), (0, 255, 0), 7)
+
 
             cv2.putText(im0, weed_str, (10, H - 30),
                         font, 0.5 * 1, (0, 255, 255), 1)

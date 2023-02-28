@@ -2,14 +2,14 @@
 
 ## Features
 -  Mobile/Desktop Application, to upload visual pollution images after detection from, the yolov7 model.
--  We have used Tiny Yolov7 Model Architecture to ensure, the app requires very less, hardware configuration to run the application.
+-  We have used Tiny Yolov7 Model Architecture to ensure, the app requires significantly less, hardware configuration to run the application.
 -  Categories/label the images and detect crop/weed. 
 -  Custom Labelling tool, to self Label the Application.
--  Sending of data points once connected to the internet, like userid, detected_image, label, bounding_box_co-ordinate, latitude, and longitude through rest API.
+-  Sending data points once connected to the internet, like userid, detected_image, label, bounding_box_co-ordinate, latitude, and longitude through rest API.
 -  Rest API saves the real-time data, in the database, and sends the data to Admin Web Interface.
--  Admin can then ask the view the weed in the farmland and ask for remedy from hand plucking to spary of Weedicides.
--  Once remidy been taken. admin can remove the data -poinsts.
--  Auto Train the custom-yolov7 model, with new data points every week, and update the Application AI Model over the internet, to improve the accuracy of the model over time.
+-  Admin can then ask the view the weed in the farmland and ask for remedies from hand plucking to spray of Weedicides.
+-  Once remedy has been taken. admin can remove the data -points.
+-  Auto Train the custom-yolov7 model, with new data points every week, and update the Application AI Model over the internet, to improve the model's accuracy over time.
 -  To, incentivize the user to label or find more areas that need a fix, we incentivize them by sending them crypto rewards, through a smart contract, based on the images they are uploading.
 
 

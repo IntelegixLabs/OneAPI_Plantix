@@ -143,5 +143,11 @@ $ pyinstaller -i "favicon.ico" --onefile -w --hiddenimport=EasyTkinter --hiddeni
 <p align="center">
   <img src="Insights/1.png" />
   <img src="Insights/2.png" />
+  <img src="Insights/Data/3.png" />
+  <img src="Insights/Data/4.png" />
+  <img src="Insights/Data/5.png" />
+  <img src="Insights/Data/6.png" />
+  <img src="Insights/Data/7.png" />
+  <img src="Insights/Data/8.png" />
 </p>
 <br />

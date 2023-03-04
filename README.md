@@ -34,7 +34,7 @@
   <img src="Insights/PR_curve.png" width="200"/>
   <img src="Insights/R_curve.png" width="200"/>
   <img src="Insights/results.png" width="200"/>
-</p>bad
+</p>
 <br />
 
 #### Train Batch 
